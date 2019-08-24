@@ -1,0 +1,48 @@
+{
+    "name": "Miner",
+    "version": "0.0.1",
+    "private": true,
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Trufi/miner.git"
+    },
+    "author": {
+        "name": "Mstislav Zhivodkov",
+        "email": "stevemyz@gmail.com",
+        "url": "https://trufi.github.io/"
+    },
+    "license": "MIT",
+    "dependencies": {
+        "@types/react": "16.8.23",
+        "@types/react-dom": "16.8.4",
+        "gh-pages": "^2.1.1",
+        "react": "^16.8.6",
+        "react-dom": "^16.8.6",
+        "react-scripts": "3.0.1",
+        "typescript": "3.5.2"
+    },
+    "scripts": {
+        "start": "react-scripts start",
+        "dev": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build"
+    },
+    "eslintConfig": {
+        "extends": "react-app"
+    },
+    "homepage": "https://trufi.github.com/teamlead-reigns",
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    }
+}
