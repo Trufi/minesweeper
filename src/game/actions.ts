@@ -18,6 +18,8 @@ export const openCell = (game: GameState, x: number, y: number) => {
             openMine(game, cell);
             break;
     }
+
+    checkWin(game);
 };
 
 const openEmptyCell = (game: GameState, x: number, y: number) => {
@@ -70,4 +72,24 @@ export const getViewField = (game: GameState) => {
     }
 
     return viewField;
+};
+
+const checkWin = (game: GameState) => {
+    const { lose, field, size } = game;
+
+    if (lose) {
+        return;
+    }
+
+    for (let y = 0; y < size[1]; y++) {
+        for (let x = 0; x < size[0]; x++) {
+            const cell = field[y][x];
+
+            if (cell.type === 'empty' && !cell.opened) {
+                return;
+            }
+        }
+    }
+
+    game.win = true;
 };

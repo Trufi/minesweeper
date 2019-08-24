@@ -3,6 +3,7 @@ export interface GameState {
     minesCount: number;
     field: Cell[][];
     lose: boolean;
+    win: boolean;
 }
 
 export interface EmptyCell {

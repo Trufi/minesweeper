@@ -9,7 +9,7 @@ import { createGame, openCell } from './game';
 import { Action } from './actions';
 import { Dispatch } from './types';
 
-const game = createGame(5, [10, 10], 3);
+const game = createGame(5, [10, 10], 5);
 
 const render = () => {
     ReactDOM.render(<App game={game} dispatch={dispatch} />, document.getElementById('root'));
