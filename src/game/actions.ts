@@ -2,9 +2,9 @@ import { GameState, Mine, ViewField } from './types';
 import { insideField } from './utils';
 
 export const openCell = (game: GameState, x: number, y: number) => {
-    const { field, size } = game;
+    const { field, size, win, lose } = game;
 
-    if (!insideField(size, x, y)) {
+    if (win || lose || !insideField(size, x, y)) {
         return;
     }
 
@@ -37,8 +37,12 @@ const openEmptyCell = (game: GameState, x: number, y: number) => {
     cell.opened = true;
 
     if (cell.number === 0) {
+        openEmptyCell(game, x + 1, y + 1);
+        openEmptyCell(game, x + 1, y - 1);
         openEmptyCell(game, x + 1, y);
         openEmptyCell(game, x - 1, y);
+        openEmptyCell(game, x - 1, y + 1);
+        openEmptyCell(game, x - 1, y - 1);
         openEmptyCell(game, x, y + 1);
         openEmptyCell(game, x, y - 1);
     }
@@ -96,9 +100,9 @@ const checkWin = (game: GameState) => {
 };
 
 export const markCell = (game: GameState, x: number, y: number) => {
-    const { field, size } = game;
+    const { win, lose, field, size } = game;
 
-    if (!insideField(size, x, y)) {
+    if (win || lose || !insideField(size, x, y)) {
         return;
     }
 

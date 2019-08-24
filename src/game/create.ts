@@ -7,6 +7,8 @@ const createUniqMines = (seed: number, size: number[], minesCount: number): [num
     const busyFields = new Set<string>();
     const mines: Mine[] = [];
 
+    minesCount = Math.min(minesCount, size[0] * size[1]);
+
     let i = 0;
 
     while (i < minesCount) {

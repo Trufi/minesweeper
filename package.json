@@ -1,10 +1,10 @@
 {
-    "name": "Miner",
+    "name": "minesweeper",
     "version": "0.0.1",
     "private": true,
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Trufi/miner.git"
+        "url": "git+https://github.com/Trufi/minesweeper.git"
     },
     "author": {
         "name": "Mstislav Zhivodkov",

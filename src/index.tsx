@@ -9,8 +9,9 @@ import { createGame, openCell } from './game';
 import { Action } from './actions';
 import { Dispatch } from './types';
 import { markCell } from './game/actions';
+import { randomSeed } from './game/utils';
 
-const game = createGame(5, [10, 10], 5);
+let game = createGame(5, [10, 10], 15);
 
 const render = () => {
     ReactDOM.render(<App game={game} dispatch={dispatch} />, document.getElementById('root'));
@@ -23,6 +24,9 @@ const dispatch: Dispatch = (action: Action) => {
             break;
         case 'markCell':
             markCell(game, action.x, action.y);
+            break;
+        case 'newGame':
+            game = createGame(randomSeed(), action.size, action.minesCount);
             break;
     }
 

@@ -1,85 +1,81 @@
-import React from 'react';
-import cn from 'classnames';
+import React, { useState } from 'react';
 import { GameState, ViewCell } from '../../game/types';
 import { getViewField } from '../../game';
 import { Dispatch } from '../../types';
-import { openCellAction, markCellAction } from '../../actions';
+import { openCellAction, markCellAction, newGameAction } from '../../actions';
+import { Cell } from '../cell';
 import style from './index.module.css';
+import { SettingsDialog } from '../settings';
 
 export interface AppProps {
     game: GameState;
     dispatch: Dispatch;
 }
 
-interface CellProps {
-    cell: ViewCell;
-    onClick: () => void;
-    onMarked: () => void;
-}
-
-const Cell = ({ cell, onClick, onMarked }: CellProps) => {
-    const onContextMenu = (ev: React.MouseEvent) => {
-        ev.preventDefault();
-        onMarked();
-    };
-
-    if (cell.type === 'empty') {
-        return (
-            <div className={cn(style.cell, style.empty)}>
-                {cell.number !== 0 ? cell.number : ''}
-            </div>
-        );
-    }
-
-    if (cell.type === 'mine') {
-        return <div className={cn(style.cell, style.mine)}>x</div>;
-    }
-
-    if (cell.marked) {
-        return (
-            <div
-                className={cn(style.cell, style.unknown, style.marked)}
-                onClick={onClick}
-                onContextMenu={onContextMenu}
-            ></div>
-        );
-    }
-
-    return (
-        <div
-            className={cn(style.cell, style.unknown)}
-            onClick={onClick}
-            onContextMenu={onContextMenu}
-        ></div>
-    );
-};
-
 export const App = ({ game, dispatch }: AppProps) => {
-    const field = getViewField(game);
+    const [settings, setSettings] = useState(false);
+
+    const field = game.win || game.lose ? game.field : getViewField(game);
 
     const cells: ViewCell[] = [];
     field.forEach((row) => row.forEach((cell) => cells.push(cell)));
 
+    const width = Math.min(500, window.innerWidth);
+
+    const cellSize = Math.floor(width / game.size[0]);
+
     return (
-        <div>
-            <div>
-                Size: {game.size[0]}x{game.size[1]}, mines count: {game.minesCount}
+        <div className={style.container} style={{ width }}>
+            <div className={style.header}>
+                <div>
+                    Size: {game.size[0]}x{game.size[1]}, mines: {game.minesCount}
+                </div>
+                <div>
+                    <button onClick={() => setSettings(!settings)}>Settings</button>
+                </div>
             </div>
-            <div
-                className={style.field}
-                style={{ gridTemplateColumns: `repeat(${game.size[0]}, 50px)` }}
-            >
-                {cells.map((cell) => (
-                    <Cell
-                        key={`${cell.x}_${cell.y}`}
-                        cell={cell}
-                        onClick={() => dispatch(openCellAction(cell.x, cell.y))}
-                        onMarked={() => dispatch(markCellAction(cell.x, cell.y))}
+            <div className={style.fieldWrapper}>
+                <div
+                    className={style.field}
+                    style={{ gridTemplateColumns: `repeat(${game.size[0]}, ${cellSize}px)` }}
+                >
+                    {cells.map((cell) => (
+                        <Cell
+                            key={`${cell.x}_${cell.y}`}
+                            size={cellSize}
+                            cell={cell}
+                            onClick={() => dispatch(openCellAction(cell.x, cell.y))}
+                            onMarked={() => dispatch(markCellAction(cell.x, cell.y))}
+                        />
+                    ))}
+                </div>
+                {settings && (
+                    <SettingsDialog
+                        size={game.size}
+                        minesCount={game.minesCount}
+                        onSubmit={(size, minesCount) => {
+                            dispatch(newGameAction(size, minesCount));
+                            setSettings(false);
+                        }}
                     />
-                ))}
+                )}
             </div>
-            {game.lose && <div className={style.lose}>WASTED</div>}
-            {game.win && <div className={style.win}>WIN!</div>}
+            {game.lose && (
+                <div
+                    onClick={() => dispatch(newGameAction(game.size, game.minesCount))}
+                    className={style.lose}
+                >
+                    WASTED
+                </div>
+            )}
+            {game.win && (
+                <div
+                    onClick={() => dispatch(newGameAction(game.size, game.minesCount))}
+                    className={style.win}
+                >
+                    WIN!
+                </div>
+            )}
         </div>
     );
 };

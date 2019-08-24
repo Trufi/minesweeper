@@ -1,0 +1,46 @@
+.cell {
+    text-align: center;
+    border: 1px solid #cccccc;
+    box-sizing: border-box;
+}
+
+.unknown {
+    cursor: pointer;
+    background: #c4c4c4;
+}
+
+.unknown:hover {
+    background: #bbbbbb;
+}
+
+.marked {
+    background: #ff9900;
+}
+.marked:hover {
+    background: #e68a00;
+}
+
+.mine {
+    color: #ff0000;
+    font-weight: 700;
+}
+
+.number-1 {
+    color: #4781ff;
+}
+
+.number-2 {
+    color: #009113;
+}
+
+.number-3 {
+    color: #d82b00;
+}
+
+.number-4 {
+    color: #7b0ed4;
+}
+
+.number-5 {
+    color: #a80f0a;
+}

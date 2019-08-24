@@ -1,5 +1,3 @@
-# TeamLead Reigns
+# Minesweeper
 
-Игра про сложную жизнь тимлида. Все совпадения случайны.
-
-[Demo](https://trufi.github.io/teamlead-reigns/)
+[Demo](https://trufi.github.io/minesweeper/)
