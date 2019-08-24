@@ -12,6 +12,7 @@ export interface EmptyCell {
     y: number;
     number: number;
     opened: boolean;
+    marked: boolean;
 }
 
 export interface Mine {
@@ -19,6 +20,7 @@ export interface Mine {
     x: number;
     y: number;
     opened: boolean;
+    marked: boolean;
 }
 
 export type Cell = EmptyCell | Mine;
@@ -27,6 +29,7 @@ export interface UnknownCell {
     type: 'unknown';
     x: number;
     y: number;
+    marked: boolean;
 }
 
 export type ViewCell = Cell | UnknownCell;

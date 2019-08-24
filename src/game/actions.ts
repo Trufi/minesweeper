@@ -66,6 +66,7 @@ export const getViewField = (game: GameState) => {
                     type: 'unknown',
                     x,
                     y,
+                    marked: cell.marked,
                 };
             }
         }
@@ -92,4 +93,15 @@ const checkWin = (game: GameState) => {
     }
 
     game.win = true;
+};
+
+export const markCell = (game: GameState, x: number, y: number) => {
+    const { field, size } = game;
+
+    if (!insideField(size, x, y)) {
+        return;
+    }
+
+    const cell = field[y][x];
+    cell.marked = !cell.marked;
 };

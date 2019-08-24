@@ -1,8 +1,5 @@
 .field {
-}
-
-.row {
-    display: flex;
+    display: grid;
 }
 
 .cell {
@@ -22,6 +19,13 @@
 
 .unknown:hover {
     background: #bbbbbb;
+}
+
+.marked {
+    background: #ff9900;
+}
+.marked:hover {
+    background: #e68a00;
 }
 
 .mine {

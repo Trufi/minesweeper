@@ -6,4 +6,12 @@ export const openCellAction = (x: number, y: number) => ({
 
 export type OpenCellAction = ReturnType<typeof openCellAction>;
 
-export type Action = OpenCellAction;
+export const markCellAction = (x: number, y: number) => ({
+    type: 'markCell' as 'markCell',
+    x,
+    y,
+});
+
+export type MarkCellAction = ReturnType<typeof markCellAction>;
+
+export type Action = OpenCellAction | MarkCellAction;

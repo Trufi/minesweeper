@@ -25,6 +25,7 @@ const createUniqMines = (seed: number, size: number[], minesCount: number): [num
                 x,
                 y,
                 opened: false,
+                marked: false,
             });
             i++;
         }
@@ -45,6 +46,7 @@ const createEmptyField = (size: number[]) => {
                 y,
                 number: 0,
                 opened: false,
+                marked: false,
             };
         }
     }

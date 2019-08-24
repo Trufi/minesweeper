@@ -8,6 +8,7 @@ import * as serviceWorker from './serviceWorker';
 import { createGame, openCell } from './game';
 import { Action } from './actions';
 import { Dispatch } from './types';
+import { markCell } from './game/actions';
 
 const game = createGame(5, [10, 10], 5);
 
@@ -19,6 +20,9 @@ const dispatch: Dispatch = (action: Action) => {
     switch (action.type) {
         case 'openCell':
             openCell(game, action.x, action.y);
+            break;
+        case 'markCell':
+            markCell(game, action.x, action.y);
             break;
     }
 
