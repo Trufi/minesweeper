@@ -28,23 +28,23 @@ export const dataToTensor = (data: TestData[], size: number[]) => {
     return buf.toTensor().as4D(data.length, size[1], size[0], typeNumber);
 };
 
-export const testToTensor = (test: TestData, size: number[]) => {
-    const buf = tf.buffer([size[1], size[0], typeNumber]);
+// export const testToTensor = (test: TestData, size: number[]) => {
+//     const buf = tf.buffer([size[1], size[0], typeNumber]);
 
-    test.field.forEach((row) =>
-        row.forEach((cell) => {
-            if (cell.type === 'empty') {
-                buf.set(1, cell.y, cell.x, cell.number);
-            } else if (cell.type === 'unknown') {
-                buf.set(1, cell.y, cell.x, 9);
-            }
+//     test.field.forEach((row) =>
+//         row.forEach((cell) => {
+//             if (cell.type === 'empty') {
+//                 buf.set(1, cell.y, cell.x, cell.number);
+//             } else if (cell.type === 'unknown') {
+//                 buf.set(1, cell.y, cell.x, 9);
+//             }
 
-            // TODO: add mines
-        }),
-    );
+//             // TODO: add mines
+//         }),
+//     );
 
-    return buf.toTensor().as3D(size[1], size[0], typeNumber);
-};
+//     return buf.toTensor().as3D(size[1], size[0], typeNumber);
+// };
 
 export const dataToMinesTensor = (data: TestData[], size: number[]) => {
     const buf = tf.buffer([data.length, size[1], size[0], typeNumber]);
