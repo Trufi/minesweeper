@@ -2,6 +2,7 @@ export interface GameState {
     size: number[];
     minesCount: number;
     field: Cell[][];
+    mines: Mine[];
     lose: boolean;
     win: boolean;
 }

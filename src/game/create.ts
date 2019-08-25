@@ -95,6 +95,7 @@ export const createGame = (seed: number, size: number[], minesCount: number): Ga
         field,
         size,
         minesCount,
+        mines,
         lose: false,
         win: false,
     };

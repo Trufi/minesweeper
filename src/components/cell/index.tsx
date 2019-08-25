@@ -6,14 +6,16 @@ import style from './index.module.css';
 export interface CellProps {
     cell: ViewCell;
     size: number;
-    onClick: () => void;
-    onMarked: () => void;
+    onClick?: () => void;
+    onMarked?: () => void;
 }
 
 export const Cell = ({ size, cell, onClick, onMarked }: CellProps) => {
     const onContextMenu = (ev: React.MouseEvent) => {
         ev.preventDefault();
-        onMarked();
+        if (onMarked) {
+            onMarked();
+        }
     };
 
     const styles = {
