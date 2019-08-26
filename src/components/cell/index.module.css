@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+.predicted {
+    border: 2px solid #ff0000;
+}
+
 .unknown {
     cursor: pointer;
     background: #c4c4c4;

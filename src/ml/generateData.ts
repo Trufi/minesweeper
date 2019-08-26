@@ -18,10 +18,12 @@ export const createData = (size: number[], minesCount: number): TestData => {
 
     let x = 0;
     let y = 0;
+    let cell: Cell;
 
     do {
         [x, y] = randomCell();
-    } while (game.field[y][x].type === 'mine');
+        cell = game.field[y][x];
+    } while (cell.type !== 'empty' || cell.number !== 0);
 
     openCell(game, x, y);
 

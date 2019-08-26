@@ -29,7 +29,9 @@ export const Cell = ({ size, cell, onClick, onMarked }: CellProps) => {
         const classNumber = Math.min(cell.number, 5);
         return (
             <div
-                className={cn(style.cell, style.empty, style[`number-${classNumber}`])}
+                className={cn(style.cell, style.empty, style[`number-${classNumber}`], {
+                    [style.predicted]: cell.predicted,
+                })}
                 style={styles}
                 onContextMenu={onContextMenu}
             >
@@ -41,7 +43,7 @@ export const Cell = ({ size, cell, onClick, onMarked }: CellProps) => {
     if (cell.type === 'mine') {
         return (
             <div
-                className={cn(style.cell, style.mine)}
+                className={cn(style.cell, style.mine, { [style.predicted]: cell.predicted })}
                 style={styles}
                 onContextMenu={onContextMenu}
             >
@@ -53,7 +55,9 @@ export const Cell = ({ size, cell, onClick, onMarked }: CellProps) => {
     if (cell.marked) {
         return (
             <div
-                className={cn(style.cell, style.unknown, style.marked)}
+                className={cn(style.cell, style.unknown, style.marked, {
+                    [style.predicted]: cell.predicted,
+                })}
                 style={styles}
                 onClick={onClick}
                 onContextMenu={onContextMenu}
@@ -63,7 +67,7 @@ export const Cell = ({ size, cell, onClick, onMarked }: CellProps) => {
 
     return (
         <div
-            className={cn(style.cell, style.unknown)}
+            className={cn(style.cell, style.unknown, { [style.predicted]: cell.predicted })}
             style={styles}
             onClick={onClick}
             onContextMenu={onContextMenu}

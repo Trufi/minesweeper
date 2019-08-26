@@ -25,16 +25,18 @@ export const MlField = ({ data: { size, field, mines } }: MlFieldProps) => {
     const cellSize = Math.floor(width / size[0]);
 
     return (
-        <div
-            style={{
-                display: 'grid',
-                gridTemplateColumns: `repeat(${size[0]}, ${cellSize}px)`,
-                margin: '5px',
-            }}
-        >
-            {cells.map((cell) => (
-                <Cell key={`${cell.x}_${cell.y}`} size={cellSize} cell={cell} />
-            ))}
+        <div>
+            <div
+                style={{
+                    display: 'grid',
+                    gridTemplateColumns: `repeat(${size[0]}, ${cellSize}px)`,
+                    margin: '5px',
+                }}
+            >
+                {cells.map((cell) => (
+                    <Cell key={`${cell.x}_${cell.y}`} size={cellSize} cell={cell} />
+                ))}
+            </div>
         </div>
     );
 };

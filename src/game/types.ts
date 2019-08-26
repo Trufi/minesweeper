@@ -14,6 +14,7 @@ export interface EmptyCell {
     number: number;
     opened: boolean;
     marked: boolean;
+    predicted?: boolean;
 }
 
 export interface Mine {
@@ -22,6 +23,7 @@ export interface Mine {
     y: number;
     opened: boolean;
     marked: boolean;
+    predicted?: boolean;
 }
 
 export type Cell = EmptyCell | Mine;
@@ -31,6 +33,7 @@ export interface UnknownCell {
     x: number;
     y: number;
     marked: boolean;
+    predicted?: boolean;
 }
 
 export type ViewCell = Cell | UnknownCell;

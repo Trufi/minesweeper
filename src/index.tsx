@@ -12,7 +12,7 @@ import { markCell } from './game/actions';
 import { randomSeed } from './game/utils';
 import { MlApp } from './components/mlApp';
 import { createData, TestData } from './ml/generateData';
-import { train } from './ml';
+import { train, predict } from './ml';
 
 const startGame = () => {
     let game = createGame(5, [10, 10], 15);
@@ -44,19 +44,59 @@ const startMl = () => {
     const data: TestData[] = [];
 
     for (let i = 0; i < 20; i++) {
-        data.push(createData([10, 10], 10));
+        data.push(createData([10, 10], 15));
     }
 
     ReactDOM.render(<MlApp data={data} />, document.getElementById('root'));
 };
+(async () => {
+    if (window.location.search.slice(1) === 'test') {
+        startMl();
+    } else if (window.location.search.slice(1) === 'ml') {
+        const testData: TestData[][] = [];
 
-if (window.location.search.slice(1) === 'test') {
-    startMl();
-} else if (window.location.search.slice(1) === 'ml') {
-    train();
-} else {
-    startGame();
-}
+        let i = 0;
+        for (i = 0; i < 50; i++) {
+            await train();
+
+            testData[i] = [];
+            for (let j = 0; j < 3; j++) {
+                const { data } = predict();
+                testData[i].push(data);
+            }
+            ReactDOM.render(
+                <div>
+                    {testData.map((data, index) => (
+                        <div key={index}>
+                            <div>Epoch: {index}</div>
+                            <MlApp data={data} />
+                        </div>
+                    ))}
+                </div>,
+                document.getElementById('root'),
+            );
+        }
+
+        setInterval(() => {
+            const { data } = predict();
+            testData[i].push(data);
+
+            ReactDOM.render(
+                <div>
+                    {testData.map((data, index) => (
+                        <div key={index}>
+                            <div>Epoch: {index}</div>
+                            <MlApp data={data} />
+                        </div>
+                    ))}
+                </div>,
+                document.getElementById('root'),
+            );
+        }, 500);
+    } else {
+        startGame();
+    }
+})();
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
