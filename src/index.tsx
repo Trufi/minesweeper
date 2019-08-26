@@ -79,7 +79,7 @@ const startMl = () => {
 
         setInterval(() => {
             const { data } = predict();
-            testData[i].push(data);
+            testData[i - 1].push(data);
 
             ReactDOM.render(
                 <div>
