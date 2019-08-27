@@ -19,7 +19,7 @@ model.add(tf.layers.dense({ units: 2000, activation: 'relu' }));
 model.add(tf.layers.dense({ units: 1500, activation: 'relu' }));
 // model.add(tf.layers.reshape({ targetShape: [size[1], size[0]] }));
 // model.add(tf.layers.timeDistributed({ layer: tf.layers.dense({ units: 11 }) }));
-model.add(tf.layers.dense({ units: size[0] * size[1] * 11, activation: 'softmax' }));
+model.add(tf.layers.dense({ units: size[0] * size[1], activation: 'softmax' }));
 
 model.summary();
 
@@ -105,10 +105,10 @@ export const predict = (): { data: TestData } => {
 
         const predictOut = model.predict(newX) as tf.Tensor2D;
 
-        console.log('RealX', getHtml(Array.from(shape(newX, 1).dataSync())));
-        console.log('RealY', getHtml(Array.from(shape(newY, 10).dataSync())));
+        // console.log('RealX', getHtml(Array.from(shape(newX, 1).dataSync())));
+        console.log('RealY', getHtml(Array.from(shape(newY, 0).dataSync())));
 
-        const pred = Array.from(shape(predictOut, 10).dataSync());
+        const pred = Array.from(shape(predictOut, 0).dataSync());
         console.log(
             'Predict',
             getHtml(pred), //.map((x) => Math.round(x))),
@@ -133,11 +133,15 @@ export const predict = (): { data: TestData } => {
 };
 
 const shape = (t2: tf.Tensor2D, param: number) => {
-    const t4 = t2.as4D(t2.shape[0], size[1], size[0], 11);
+    return tf.tidy(() => {
+        const t4 = t2.as4D(t2.shape[0], size[1], size[0], 1);
 
-    const t3 = t4
-        .slice([0, 0, 0, 0], [1, t4.shape[1], t4.shape[2], t4.shape[3]])
-        .as3D(t4.shape[1], t4.shape[2], t4.shape[3]);
+        const t3 = t4
+            .slice([0, 0, 0, 0], [1, t4.shape[1], t4.shape[2], t4.shape[3]])
+            .as3D(t4.shape[1], t4.shape[2], t4.shape[3]);
 
-    return t3.slice([0, 0, param], [t3.shape[0], t3.shape[1], 1]).as2D(t3.shape[0], t3.shape[1]);
+        return t3
+            .slice([0, 0, param], [t3.shape[0], t3.shape[1], 1])
+            .as2D(t3.shape[0], t3.shape[1]);
+    });
 };

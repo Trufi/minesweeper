@@ -56,7 +56,7 @@ const startMl = () => {
         const testData: TestData[][] = [];
 
         let i = 0;
-        for (i = 0; i < 50; i++) {
+        for (i = 0; i < 30; i++) {
             await train();
 
             testData[i] = [];

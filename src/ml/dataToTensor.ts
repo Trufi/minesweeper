@@ -29,13 +29,13 @@ export const dataToTensor = (data: TestData[], size: number[]) => {
 };
 
 export const dataToMinesTensor = (data: TestData[], size: number[]) => {
-    const buf = tf.buffer([data.length, size[1], size[0], typeNumber]);
+    const buf = tf.buffer([data.length, size[1], size[0]]);
 
     data.forEach((test, index) => {
         test.mines.forEach((mine) => {
-            buf.set(1, index, mine.y, mine.x, 10);
+            buf.set(1, index, mine.y, mine.x);
         });
     });
 
-    return buf.toTensor().as2D(data.length, size[1] * size[0] * typeNumber);
+    return buf.toTensor().as2D(data.length, size[1] * size[0]);
 };
