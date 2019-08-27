@@ -25,7 +25,7 @@ export const dataToTensor = (data: TestData[], size: number[]) => {
         );
     });
 
-    return buf.toTensor().as2D(data.length, size[1] * size[0] * typeNumber);
+    return buf.toTensor().as4D(data.length, size[1], size[0], typeNumber);
 };
 
 export const dataToMinesTensor = (data: TestData[], size: number[]) => {

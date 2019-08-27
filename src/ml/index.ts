@@ -7,24 +7,39 @@ const minesCount = 10;
 
 const model = tf.sequential();
 
+// model.add(
+//     tf.layers.dense({
+//         units: 2500,
+//         activation: 'relu',
+//         inputShape: [size[1] * size[0] * 11],
+//     }),
+// );
+
+// model.add(tf.layers.repeatVector({ n: 10, inputShape: [size[1], size[0], 11] }));
 model.add(
-    tf.layers.dense({
-        units: 2500,
+    tf.layers.conv2d({
+        inputShape: [size[1], size[0], 11],
+        kernelSize: 5,
+        filters: 32,
         activation: 'relu',
-        inputShape: [size[1] * size[0] * 11],
     }),
 );
+model.add(tf.layers.maxPooling2d({ poolSize: 2, strides: 2 }));
 
-model.add(tf.layers.dense({ units: 2000, activation: 'relu' }));
-model.add(tf.layers.dense({ units: 1500, activation: 'relu' }));
-// model.add(tf.layers.reshape({ targetShape: [size[1], size[0]] }));
-// model.add(tf.layers.timeDistributed({ layer: tf.layers.dense({ units: 11 }) }));
-model.add(tf.layers.dense({ units: size[0] * size[1], activation: 'softmax' }));
+model.add(tf.layers.flatten({}));
+
+model.add(tf.layers.dense({ units: 200, activation: 'relu' }));
+
+// model.add(
+//     tf.layers.timeDistributed({ layer: tf.layers.dense({ units: 100, activation: 'softmax' }) }),
+// );
+model.add(tf.layers.dense({ units: 100, activation: 'softmax' }));
 
 model.summary();
 
 model.compile({
-    optimizer: 'rmsprop', // tf.train.adam(),
+    // optimizer: 'rmsprop', // tf.train.adam(),
+    optimizer: tf.train.adam(),
 
     loss: 'categoricalCrossentropy',
     // loss: 'sparseCategoricalCrossentropy', // нужно использовать oneHot
@@ -59,7 +74,7 @@ const createTestData = (n: number) => {
 
     console.log(`Converted ${n} data`);
 
-    return [x, y] as [tf.Tensor2D, tf.Tensor2D];
+    return [x, y] as [typeof x, typeof y];
 };
 
 export const train = async () => {
@@ -68,6 +83,7 @@ export const train = async () => {
 
     const history = await model.fit(x, y, {
         epochs: 1,
+
         batchSize: 32,
         validationData,
         yieldEvery: 'epoch',
@@ -106,7 +122,7 @@ export const predict = (): { data: TestData } => {
         const predictOut = model.predict(newX) as tf.Tensor2D;
 
         // console.log('RealX', getHtml(Array.from(shape(newX, 1).dataSync())));
-        console.log('RealY', getHtml(Array.from(shape(newY, 0).dataSync())));
+        // console.log('RealY', getHtml(Array.from(shape(newY, 0).dataSync())));
 
         const pred = Array.from(shape(predictOut, 0).dataSync());
         console.log(

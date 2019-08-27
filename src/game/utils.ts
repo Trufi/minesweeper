@@ -2,7 +2,7 @@ export const randomSeed = () => Math.round(Math.random() * 2147483647);
 
 export const random = (seed: number) => {
     seed = (seed * 16807) % 2147483647;
-    return [seed, (seed - 1) / 2147483646];
+    return [seed, Math.random()];
 };
 
 export const insideField = (size: number[], x: number, y: number) => {
