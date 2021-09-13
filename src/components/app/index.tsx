@@ -34,15 +34,17 @@ export const App = ({ game, dispatch }: AppProps) => {
                     <button onClick={() => setSettings(!settings)}>Settings</button>
                 </div>
             </div>
-            <div className={style.fieldWrapper}>
+            <div className={style.fieldWrapper} style={{ height: width }}>
                 <div
                     className={style.field}
-                    style={{ gridTemplateColumns: `repeat(${game.size[0]}, ${cellSize}px)` }}
+                    style={{
+                        gridTemplateColumns: `repeat(${game.size[0]}, 50px)`,
+                        transform: `scale(${cellSize / 50})`,
+                    }}
                 >
                     {cells.map((cell) => (
                         <Cell
                             key={`${cell.x}_${cell.y}`}
-                            size={cellSize}
                             cell={cell}
                             onClick={() => dispatch(openCellAction(cell.x, cell.y))}
                             onMarked={() => dispatch(markCellAction(cell.x, cell.y))}

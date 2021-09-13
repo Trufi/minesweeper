@@ -10,6 +10,10 @@ export const openCell = (game: GameState, x: number, y: number) => {
 
     const cell = field[y][x];
 
+    if (cell.marked) {
+        return;
+    }
+
     switch (cell.type) {
         case 'empty':
             openEmptyCell(game, x, y);

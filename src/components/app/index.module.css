@@ -15,6 +15,7 @@
 .field {
     display: grid;
     user-select: none;
+    transform-origin: top left;
 }
 
 .lose {
