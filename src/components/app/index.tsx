@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { markCellAction, newGameAction, openCellAction } from '../../actions';
+import { newGameAction } from '../../actions';
 import { getViewField } from '../../game';
 import { GameState, ViewCell } from '../../game/types';
 import { Dispatch } from '../../types';
-import { Cell } from '../cell';
-import { SettingsDialog } from '../settings';
+import { View } from '../view/view';
 import style from './index.module.css';
 
 export interface AppProps {
@@ -22,7 +21,7 @@ export const App = ({ game, dispatch }: AppProps) => {
 
     const width = Math.min(500, window.innerWidth);
 
-    const cellSize = Math.floor(width / game.size[0]);
+    // const cellSize = Math.floor(width / game.size[0]);
 
     return (
         <div className={style.container} style={{ width }}>
@@ -34,7 +33,7 @@ export const App = ({ game, dispatch }: AppProps) => {
                     <button onClick={() => setSettings(!settings)}>Settings</button>
                 </div>
             </div>
-            <div className={style.fieldWrapper} style={{ height: width }}>
+            {/* <div className={style.fieldWrapper} style={{ height: width }}>
                 <div
                     className={style.field}
                     style={{
@@ -61,6 +60,9 @@ export const App = ({ game, dispatch }: AppProps) => {
                         }}
                     />
                 )}
+            </div> */}
+            <div>
+                <View game={game} dispatch={dispatch} />
             </div>
             {game.lose && (
                 <div
