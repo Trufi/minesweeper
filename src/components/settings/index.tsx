@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import style from './index.module.css';
 
 export interface SettingsDialogProps {

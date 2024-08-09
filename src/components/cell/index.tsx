@@ -1,4 +1,3 @@
-import React from 'react';
 import cn from 'classnames';
 import { ViewCell } from '../../game/types';
 import style from './index.module.css';

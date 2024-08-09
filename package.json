@@ -1,7 +1,8 @@
 {
     "name": "minesweeper",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "private": true,
+    "source": "src/index.html",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/Trufi/minesweeper.git"
@@ -12,40 +13,26 @@
         "url": "https://trufi.github.io/"
     },
     "license": "MIT",
-    "dependencies": {
-        "@tensorflow/tfjs": "^1.2.8",
-        "@types/classnames": "^2.2.9",
-        "@types/react": "16.8.23",
-        "@types/react-dom": "16.8.4",
-        "classnames": "^2.2.6",
-        "gh-pages": "^5.0.0",
-        "react": "^16.8.6",
-        "react-dom": "^16.8.6",
-        "react-scripts": "3.0.1",
-        "typescript": "3.5.2"
-    },
     "scripts": {
-        "start": "react-scripts start",
-        "dev": "react-scripts start",
-        "build": "react-scripts build",
-        "test": "react-scripts test",
-        "predeploy": "npm run build",
-        "deploy": "gh-pages -d build"
+        "start": "npm run dev",
+        "build": "parcel build --public-url .",
+        "dev": "parcel --port 3002",
+        "prettier": "prettier --check \"./**/*.{ts,tsx,js,json,html,css}\"",
+        "test": "npm run prettier && npm run build"
     },
-    "eslintConfig": {
-        "extends": "react-app"
+    "dependencies": {
+        "classnames": "^2.5.1",
+        "react": "^18.3.1",
+        "react-dom": "^18.3.1",
+        "tslib": "^2.6.3"
     },
-    "homepage": "https://trufi.github.com/minesweeper",
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
+    "devDependencies": {
+        "@types/classnames": "^2.3.1",
+        "@types/react": "^18.3.3",
+        "@types/react-dom": "^18.3.0",
+        "parcel": "^2.12.0",
+        "prettier": "^3.3.3",
+        "process": "^0.11.10",
+        "typescript": "^5.5.4"
     }
 }

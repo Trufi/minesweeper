@@ -40,7 +40,6 @@ const openEmptyCell = (game: GameState, x: number, y: number) => {
 
     cell.opened = true;
 
-    // TODO: раскоментить, чтобы игра работала
     if (cell.number === 0) {
         openEmptyCell(game, x + 1, y + 1);
         openEmptyCell(game, x + 1, y - 1);

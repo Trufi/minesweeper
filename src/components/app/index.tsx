@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { GameState, ViewCell } from '../../game/types';
+import { useState } from 'react';
+import { markCellAction, newGameAction, openCellAction } from '../../actions';
 import { getViewField } from '../../game';
+import { GameState, ViewCell } from '../../game/types';
 import { Dispatch } from '../../types';
-import { openCellAction, markCellAction, newGameAction } from '../../actions';
 import { Cell } from '../cell';
-import style from './index.module.css';
 import { SettingsDialog } from '../settings';
+import style from './index.module.css';
 
 export interface AppProps {
     game: GameState;
