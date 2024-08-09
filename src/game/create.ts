@@ -66,5 +66,6 @@ export const createGame = (seed: number, size: number[], probability: number): G
         minesCount,
         lose: false,
         win: false,
+        revision: 1,
     };
 };

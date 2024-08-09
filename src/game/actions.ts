@@ -50,11 +50,14 @@ const openEmptyCell = (game: GameState, x: number, y: number) => {
         openEmptyCell(game, x, y + 1);
         openEmptyCell(game, x, y - 1);
     }
+
+    game.revision++;
 };
 
 const openMine = (game: GameState, mine: Mine) => {
     game.lose = true;
     mine.opened = true;
+    game.revision++;
 };
 
 export const getViewField = (game: GameState) => {
@@ -112,4 +115,5 @@ export const markCell = (game: GameState, x: number, y: number) => {
 
     const cell = field[y][x];
     cell.marked = !cell.marked;
+    game.revision++;
 };

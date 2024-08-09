@@ -4,6 +4,7 @@ export interface GameState {
     field: Cell[][];
     lose: boolean;
     win: boolean;
+    revision: number;
 }
 
 export interface EmptyCell {
