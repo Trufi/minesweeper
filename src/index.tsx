@@ -7,7 +7,7 @@ import { randomSeed } from './game/utils';
 import './index.css';
 import { Dispatch } from './types';
 
-let game = createGame(5, [10, 10], 15);
+let game = createGame(randomSeed(), [20, 20], 0.25);
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
@@ -24,7 +24,7 @@ const dispatch: Dispatch = (action: Action) => {
             markCell(game, action.x, action.y);
             break;
         case 'newGame':
-            game = createGame(randomSeed(), action.size, action.minesCount);
+            game = createGame(randomSeed(), action.size, 0.1);
             break;
     }
 
