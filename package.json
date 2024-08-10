@@ -16,13 +16,14 @@
     "scripts": {
         "start": "npm run dev",
         "build": "parcel build --public-url .",
-        "dev": "parcel --port 3002",
+        "dev": "parcel --port 3000",
         "prettier": "prettier --check \"./**/*.{ts,tsx,js,json,html,css}\"",
         "test": "npm run prettier && npm run build"
     },
     "dependencies": {
         "@react-three/drei": "^9.109.5",
         "@react-three/fiber": "^8.16.8",
+        "@use-gesture/react": "^10.3.1",
         "classnames": "^2.5.1",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",

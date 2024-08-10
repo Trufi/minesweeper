@@ -1,5 +1,5 @@
-import { OrthographicCamera } from '@react-three/drei';
-import { Canvas, ThreeEvent } from '@react-three/fiber';
+import { Canvas, ThreeEvent, useThree } from '@react-three/fiber';
+import { useDrag, useWheel } from '@use-gesture/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
     Color,
@@ -7,6 +7,7 @@ import {
     LinearFilter,
     LinearMipmapNearestFilter,
     Object3D,
+    OrthographicCamera as OrthographicCameraImpl,
     SRGBColorSpace,
 } from 'three';
 import { markCellAction, openCellAction } from '../../actions';
@@ -19,25 +20,64 @@ const tempColor = new Color();
 export const View = ({ game, dispatch }: { game: GameState; dispatch: Dispatch }) => {
     return (
         <div
-            style={{ width: 500, height: 500, cursor: 'pointer' }}
+            style={{ width: '100%', height: '100%', cursor: 'pointer' }}
             onContextMenu={(ev) => ev.preventDefault()}
         >
-            <Canvas orthographic fallback={<div>Sorry no WebGL supported!</div>}>
-                <OrthographicCamera
-                    makeDefault
-                    left={0}
-                    right={game.size[0]}
-                    bottom={0}
-                    top={game.size[1]}
-                    near={0.001}
-                    far={1000}
-                    position={[0, 0, 1]}
-                />
+            <Canvas fallback={<div>Sorry no WebGL supported!</div>} orthographic>
+                <Camera game={game} />
                 <Field game={game} dispatch={dispatch} />
                 <ambientLight color={0xffffff} intensity={1} />
             </Canvas>
         </div>
     );
+};
+
+const z1 = 50;
+
+const Camera = ({ game }: { game: GameState }) => {
+    const { size, camera } = useThree();
+    const [zoom, setZoom] = useState(2);
+
+    useDrag(
+        (state) => {
+            camera.position.x -= (state.delta[0] / z1) * zoom;
+            camera.position.y += (state.delta[1] / z1) * zoom;
+        },
+        { target: document.body, pointer: { keys: false }, filterTaps: true },
+    );
+
+    useWheel(
+        (state) => {
+            setZoom((z) => Math.max(1, z + state.delta[1] / 500));
+        },
+        { target: document.body },
+    );
+
+    useEffect(() => {
+        if (camera instanceof OrthographicCameraImpl) {
+            camera.position.set(game.size[0] / 2, game.size[1] / 2, 1);
+        }
+    }, []);
+
+    useEffect(() => {
+        const right = ((size.width / z1) * zoom) / 2;
+        const top = ((size.height / z1) * zoom) / 2;
+
+        if (camera instanceof OrthographicCameraImpl) {
+            camera.left = -right;
+            camera.right = right;
+            camera.top = top;
+            camera.bottom = -top;
+            camera.updateProjectionMatrix();
+        }
+    }, [size.width, size.height, zoom]);
+
+    useDrag((state) => {
+        camera.position.x += (state.movement[0] / z1) * zoom;
+        camera.position.y += (state.movement[1] / z1) * zoom;
+    });
+
+    return null;
 };
 
 const numberToColor: { [key: number]: string } = {
@@ -52,6 +92,24 @@ const numberToColor: { [key: number]: string } = {
 };
 
 const Field = ({ game, dispatch }: { game: GameState; dispatch: Dispatch }) => {
+    return (
+        <>
+            <ClosedCells game={game} dispatch={dispatch} />
+            <OpenedCells game={game} n={0} />
+            <OpenedCells game={game} n={1} />
+            <OpenedCells game={game} n={2} />
+            <OpenedCells game={game} n={3} />
+            <OpenedCells game={game} n={4} />
+            <OpenedCells game={game} n={5} />
+            <OpenedCells game={game} n={6} />
+            <OpenedCells game={game} n={7} />
+            <OpenedCells game={game} n={8} />
+            <OpenedCells game={game} n={8} mine />
+        </>
+    );
+};
+
+const ClosedCells = ({ game, dispatch }: { game: GameState; dispatch: Dispatch }) => {
     const [hover, setHover] = useState<number>();
 
     const meshRef = useRef<InstancedMesh>(null);
@@ -153,17 +211,6 @@ const Field = ({ game, dispatch }: { game: GameState; dispatch: Dispatch }) => {
                 </planeGeometry>
                 <meshBasicMaterial toneMapped={false} vertexColors />
             </instancedMesh>
-
-            <OpenedCells game={game} n={0} />
-            <OpenedCells game={game} n={1} />
-            <OpenedCells game={game} n={2} />
-            <OpenedCells game={game} n={3} />
-            <OpenedCells game={game} n={4} />
-            <OpenedCells game={game} n={5} />
-            <OpenedCells game={game} n={6} />
-            <OpenedCells game={game} n={7} />
-            <OpenedCells game={game} n={8} />
-            <OpenedCells game={game} n={8} mine />
         </>
     );
 };

@@ -7,7 +7,7 @@ import { randomSeed } from './game/utils';
 import './index.css';
 import { Dispatch } from './types';
 
-let game = createGame(randomSeed(), [20, 20], 0.2);
+let game = createGame(randomSeed(), [200, 200], 0.1);
 
 const container = document.getElementById('root');
 const root = createRoot(container!);

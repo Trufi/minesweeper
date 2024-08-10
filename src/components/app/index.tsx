@@ -24,7 +24,9 @@ export const App = ({ game, dispatch }: AppProps) => {
     // const cellSize = Math.floor(width / game.size[0]);
 
     return (
-        <div className={style.container} style={{ width }}>
+        <div className={style.container}>
+            <View game={game} dispatch={dispatch} />
+
             <div className={style.header}>
                 <div>
                     Size: {game.size[0]}x{game.size[1]}, mines: {game.minesCount}
@@ -61,9 +63,6 @@ export const App = ({ game, dispatch }: AppProps) => {
                     />
                 )}
             </div> */}
-            <div>
-                <View game={game} dispatch={dispatch} />
-            </div>
             {game.lose && (
                 <div
                     onClick={() => dispatch(newGameAction(game.size, game.minesCount))}
